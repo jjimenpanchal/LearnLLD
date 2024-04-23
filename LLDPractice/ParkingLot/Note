@@ -1,0 +1,72 @@
+ParkingSlot
++ occupyParkingSlot() : boolean
++ vacateParkingSlot() : boolean
+
+TwoWheelerParkingSlot
+    + id : int
+    + floor : int
+    + price : double
+    + status : ParkingSlotStatus
+
+    + occupyParkingSlot() : boolean
+    + vacateParkingSlot() : boolean
+
+ParkingSlotStatus
+ OCCUPIED
+ VACANT
+
+VehicleType
+    TWO_WHEELER
+    FOUR_WHEELER
+
+Floor
+    + id : int
+    + floorNumber : int
+    + parkingSlots : List<ParkingSlot>
+
+
+ParkingSlotManager
+    + id : int
+    + floors : List<Floor>
+
+    + getAvailableParkingSlot(VehicleType vehicleType) : ParkingSlot
+    + occupyParkingSlot(VehicleType vehicleType) : ParkingSlot
+    + vacateParkingSlot(ParkingSlot parkingSlot) : boolean
+
+
+ParkingStrategy
+    + findParkingSlot(List<Floor> floors, VehicleType vehicleType) : ParkingSlot
+
+NearestParkingStrategy
+    + findParkingSlot(List<Floor> floors, VehicleType vehicleType) : ParkingSlot
+
+FillFirstParkingStrategy
+    + findParkingSlot(List<Floor> floors, VehicleType vehicleType) : ParkingSlot
+
+Ticket
+    + id : int
+    + vehicleType : VehicleType
+    + parkingSlot : ParkingSlot
+    + issuedAt : Date
+    + price : double
+
+Gate
+    + id : int
+
+EntryGate extends Gate
+    + parkingSlotManager : ParkingSlotManager
+    + processVehicleEntry(Vehicle vehicle) : Ticket
+
+ExitGate extends Gate
+    + parkingSlotManager : ParkingSlotManager
+    + calculateParkingCharges(Ticket ticket, CalculateParkingChargesStrategy  ParkingChargesStrategy) : double
+    + processVehicleExit(Ticket ticket) : double
+
+CalculateParkingChargesStrategy
+    + calculateParkingCharges(Ticket ticket) : double
+
+defaultCalculateParkingChargesStrategy
+    + calculateParkingCharges(Ticket ticket) : double
+
+HourlyCalculateParkingChargesStrategy
+    + calculateParkingCharges(Ticket ticket) : double

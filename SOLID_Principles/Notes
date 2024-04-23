@@ -1,0 +1,174 @@
+SOLID Principles:-
+
+    The SOLID principles are a set of five design principles in object-oriented programming intended to make software designs
+    more understandable, flexible, and maintainable. Each principle addresses a specific aspect of software design and promotes
+    good practices that lead to better software architecture. Here's a detailed explanation of each principle:
+
+    Single Responsibility Principle (SRP):
+        This principle states that a class should have only one reason to change, meaning it should have only one responsibility
+        or job. The idea is to keep classes focused and avoid having them do too much. When a class has multiple responsibilities,
+        changes to one of those responsibilities may require modifications to the class, increasing the risk of introducing bugs
+        and making the codebase harder to understand and maintain. By adhering to SRP, classes become more cohesive, easier to
+        test, and less likely to be affected by changes in other parts of the system.
+        Example: Consider a class called Employee that handles both employee information management and salary calculation.
+        This violates SRP because the class has two responsibilities: managing employee information and calculating salary.
+        Instead, we can separate these responsibilities into two classes: Employee and SalaryCalculator. The Employee class
+        is responsible for managing employee information, while the SalaryCalculator class is responsible for calculating
+        salary based on given parameters.
+        java code :-
+        // Employee class responsible for managing employee information
+        public class Employee {
+            private String name;
+            private int id;
+            private String department;
+            // Constructor, getters, setters, etc.
+        }
+
+        // SalaryCalculator class responsible for calculating salary
+        public class SalaryCalculator {
+            public double calculateSalary(Employee employee) {
+                // Calculation logic based on employee information
+            }
+        }
+
+    Open/Closed Principle (OCP):
+        The Open/Closed Principle states that software entities (classes, modules, functions, etc.) should be open for
+        extension but closed for modification. In other words, you should be able to extend the behavior of a module without
+        modifying its source code. This principle encourages the use of abstraction and polymorphism to achieve flexibility
+        and scalability in software design. By designing classes and modules that can be extended through inheritance,
+        composition, or dependency injection, you can accommodate changes and new requirements without altering existing
+        code, reducing the risk of introducing errors and minimizing the impact of changes on the overall system.
+        Example: Consider a class called Shape with a method area() that calculates the area of different shapes such as
+        Circle, Rectangle, and Triangle. To adhere to OCP, we can make the Shape class open for extension by creating
+        subclasses for each shape and closed for modification by using polymorphism.
+        java code :-
+        // Shape interface (abstraction)
+        public interface Shape {
+            double area();
+        }
+
+        // Circle class (implementation)
+        public class Circle implements Shape {
+            private double radius;
+            public double area() {
+                return Math.PI * radius * radius;
+            }
+        }
+
+        // Rectangle class (implementation)
+        public class Rectangle implements Shape {
+            private double length;
+            private double width;
+            public double area() {
+                return length * width;
+            }
+        }
+
+        // Triangle class (implementation)
+        public class Triangle implements Shape {
+            private double base;
+            private double height;
+            public double area() {
+                return 0.5 * base * height;
+            }
+        }
+
+    Liskov Substitution Principle (LSP):
+        The Liskov Substitution Principle states that objects of a superclass should be replaceable with objects of its s
+        ubclasses without affecting the correctness of the program. In other words, derived classes should be substitutable
+        for their base classes without changing the desired properties of the program. This principle ensures that inheritance
+        hierarchies maintain consistency and behavioral contracts, preventing unexpected behavior and errors when using
+        polymorphism. Adhering to LSP promotes code reuse, modularity, and robustness in object-oriented designs.
+        Example: Consider a scenario where we have a superclass Bird with a method fly() representing the ability to fly.
+        We also have subclasses Eagle and Penguin. According to LSP, objects of subclasses should be substitutable for
+        objects of the superclass without affecting the program's correctness. Since penguins cannot fly, this violates
+        LSP. We can resolve this by refactoring the hierarchy.
+        java code:-
+        // Bird superclass
+        public class Bird {
+            public void fly() {
+                // Common flying behavior
+            }
+        }
+
+        // Eagle subclass
+        public class Eagle extends Bird {
+            // fly() inherited from Bird
+        }
+
+        // Penguin subclass
+        public class Penguin extends Bird {
+            @Override
+            public void fly() {
+                throw new UnsupportedOperationException("Penguins cannot fly");
+            }
+        }
+
+    Interface Segregation Principle (ISP):
+        The Interface Segregation Principle states that clients should not be forced to depend on interfaces they do not use.
+        It emphasizes the importance of designing fine-grained, specific interfaces tailored to the needs of clients rather
+        than creating large, monolithic interfaces that impose unnecessary dependencies. By splitting interfaces into smaller,
+        cohesive units, you can minimize coupling between components, promote better encapsulation, and improve the
+        maintainability and flexibility of the software.
+        Example: Consider an interface called Worker with methods work() and takeBreak(). Some classes, such as Engineer
+        and Manager, may need both methods, while others, like CEO, may only need work(). Instead of forcing the CEO
+        class to implement takeBreak(), we can split the interface into smaller, more focused interfaces.
+        java code:-
+        // Worker interface segregated into two interfaces
+        public interface Workable {
+            void work();
+        }
+
+        public interface Breakable {
+            void takeBreak();
+        }
+
+        // Engineer class implementing both Workable and Breakable
+        public class Engineer implements Workable, Breakable {
+            // Implementations of work() and takeBreak()
+        }
+
+        // Manager class implementing both Workable and Breakable
+        public class Manager implements Workable, Breakable {
+            // Implementations of work() and takeBreak()
+        }
+
+        // CEO class implementing only Workable
+        public class CEO implements Workable {
+            // Implementation of work() only
+        }
+
+    Dependency Inversion Principle (DIP):
+        The Dependency Inversion Principle states that high-level modules should not depend on low-level modules; both should d
+        epend on abstractions. Furthermore, abstractions should not depend on details; details should depend on abstractions.
+        This principle encourages decoupling between modules by introducing abstractions and defining contracts between them.
+        By programming to interfaces rather than concrete implementations, you can achieve loose coupling, facilitate code
+        reuse, and improve the flexibility and testability of the system.
+        Example: Consider a high-level module UserService that depends on a low-level module DatabaseService. According
+        to DIP, both should depend on abstractions. We can introduce an interface Database to define the contract,
+        allowing UserService to depend on Database instead of DatabaseService directly.
+        java code:-
+        // Database interface
+        public interface Database {
+            void connect();
+            void disconnect();
+            // Other database operations
+        }
+
+        // DatabaseService implementing Database
+        public class DatabaseService implements Database {
+            // Implementations of connect(), disconnect(), etc.
+        }
+
+        // UserService depending on Database abstraction
+        public class UserService {
+            private Database database;
+            public UserService(Database database) {
+                this.database = database;
+            }
+            // UserService methods using database
+        }
+
+    By applying these SOLID principles, software developers can create more robust, scalable, and maintainable codebases
+    that are easier to understand, extend, and modify. These principles serve as guidelines for writing clean, elegant,
+    and efficient object-oriented software designs.
