@@ -1,0 +1,7 @@
+Q design tictactoe
+
+Requesrements:
+- there can be n - 1 players each player will have only one symbol
+- the board will be of size n*n
+- if any symbol is all filled in a row or column or diagonal then that player wins
+- each player will move in circular order

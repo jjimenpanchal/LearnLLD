@@ -1,0 +1,46 @@
+https://drive.google.com/file/d/1zK0AAWLq14bWhveyCNqdmMyIAGeDnmZs/view?usp=sharing
+Objects:-
+PlayingPeice
+Board
+Player
+Game
+
+PlayingPeice:-
+     symbol : char
+
+PlayingPeiceX extends PlayingPeice:-
+    super(PlayingPeaiceType.X)
+
+PlayingPeiceO extends PlayingPeice:-
+    super(PlayingPeaiceType.O)
+
+PlayingPeaiceType:-
+    X
+    O
+
+Board:-
+    - List<List<PlayingPeice>> board;
+
+    + placePeice(PlayingPeice : PlayingPeice, row : int, col : int) : boolean
+
+Player:-
+    - id : int
+    - name : String
+    - playingPeice : PlayingPeice
+
+    + decideMove(board : Board) : Move
+    + makeMove(board: Board, move : Move ) : boolean
+
+Move:-
+    - row : int
+    - col : int
+
+    + Move(row : int, col : int)
+
+Game:-
+    - Queue<Player> players;
+    - Board board;
+    - winner : Player
+
+    +initialzeGame() : void
+    + RunGame() : Player
